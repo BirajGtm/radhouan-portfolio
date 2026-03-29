@@ -1,0 +1,99 @@
+---
+/**
+ * DYNAMIC CATEGORY INDEX
+ * This page serves as a filtered list view for blog posts within a specific category.
+ * - Captures the category slug (e.g., 'coding', 'it') from the URL.
+ * - Filters the global blog collection to show only matching posts.
+ */
+import { getCollection } from "astro:content";
+import BaseHead from "../../../components/BaseHead.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import BlogGrid from "../../../components/BlogGrid.jsx";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  // Extract unique categories from post IDs
+  const categories = new Set<string>();
+  posts.forEach((post) => {
+    const parts = post.id.split("/");
+    if (parts.length > 1) {
+      // Remove .md extension and get category
+      const category = parts[0];
+      categories.add(category);
+    }
+  });
+
+  return Array.from(categories).map((category) => ({
+    params: { category },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+
+// Get all posts in this category
+const allPosts = await getCollection("blog");
+const categoryPosts = allPosts
+  .filter((post) => {
+    const parts = post.id.split("/");
+    return parts.length > 1 && parts[0] === category;
+  })
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Calculate reading time and prepare data for React component
+const enhancedPosts = categoryPosts.map((post) => {
+  const wordCount = post.body.split(/\s+/g).length;
+  const readingTime = Math.ceil(wordCount / 200);
+  return {
+    id: post.id.replace(/\.md$/, ""),
+    title: post.data.title,
+    description: post.data.description,
+    pubDate: post.data.pubDate,
+    heroImage: post.data.heroImage,
+    tags: post.data.tags || [],
+    readingTime: `${readingTime} min read`,
+  };
+});
+
+// Format category name for display
+const categoryName = category
+  .split("-")
+  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(" ");
+
+const pageTitle = `${categoryName} - Blog`;
+const pageDescription = `Articles about ${categoryName}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={pageTitle} description={pageDescription} />
+  </head>
+  <body
+    class="bg-white dark:bg-darkBg text-slate-900 dark:text-slate-200 font-sans transition-colors duration-300 flex flex-col min-h-screen"
+  >
+    <Header />
+    <main class="flex-grow">
+      <section class="max-w-5xl mx-auto px-4 py-20">
+        <div class="mb-12 text-center md:text-left">
+          <h1
+            class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-4"
+          >
+            {categoryName}
+          </h1>
+          <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
+            {enhancedPosts.length} article{
+              enhancedPosts.length !== 1 ? "s" : ""
+            } in this category
+          </p>
+        </div>
+
+        <BlogGrid client:load posts={enhancedPosts} />
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>

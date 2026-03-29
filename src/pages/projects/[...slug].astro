@@ -1,0 +1,26 @@
+---
+/**
+ * DYNAMIC PROJECT ROUTE
+ * This file acts as a template-machine for all project pages.
+ * It uses 'getStaticPaths' to generate a unique URL (slug) for every Markdown file in 'src/content/projects'.
+ * When a user visits '/projects/slug', Astro renders the matching project using the ProjectPost layout.
+ */
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import ProjectPost from "../../layouts/ProjectPost.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.id.replace(/\.md$/, "") },
+    props: project,
+  }));
+}
+type Props = CollectionEntry<"projects">;
+
+const project = Astro.props;
+const { Content } = await render(project);
+---
+
+<ProjectPost {...project.data}>
+  <Content />
+</ProjectPost>

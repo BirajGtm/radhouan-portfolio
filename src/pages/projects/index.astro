@@ -1,0 +1,68 @@
+---
+/**
+ * PROJECTS DIRECTORY PAGE
+ * This page serves as the main hub for all technical work.
+ * - Fetches all project entries from the collection.
+ * - Integrates the ProjectsGrid which handles real-time search, sorting, and category logic (IT vs. Coding).
+ */
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ProjectsGrid from "../../components/ProjectsGrid.jsx";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects")).filter(
+  (p) => p.data.visible !== false,
+);
+
+const pageTitle = "Projects";
+const pageDescription = "A collection of my recent projects and case studies";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={pageTitle} description={pageDescription} />
+  </head>
+  <body
+    class="bg-white dark:bg-darkBg text-slate-900 dark:text-slate-200 font-sans transition-colors duration-300 flex flex-col min-h-screen"
+  >
+    <Header />
+
+    <main class="flex-grow">
+      <!-- Hero Section -->
+      <section class="max-w-5xl mx-auto px-4 py-20">
+        <div class="space-y-6 mb-12">
+          <h1
+            class="text-5xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white"
+          >
+            Projects
+          </h1>
+          <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
+            A collection of my recent projects, case studies, and side projects.
+            Each project represents my work across different technologies and
+            domains.
+          </p>
+        </div>
+
+        <!-- Projects Grid with Search & Sort -->
+        <ProjectsGrid
+          client:load
+          projects={projects.map((p) => ({
+            id: p.id.replace(/\.md$/, ""),
+            slug: p.slug.replace(/\.md$/, ""),
+            title: p.data.title,
+            description: p.data.description,
+            stack: p.data.stack,
+            repoUrl: p.data.repoUrl,
+            liveUrl: p.data.liveUrl,
+            heroImage: p.data.heroImage,
+            category: p.data.category,
+          }))}
+        />
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>

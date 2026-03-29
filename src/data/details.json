@@ -1,0 +1,85 @@
+{
+  "work-kinectrics": {
+    "title": "AI / Software Developer Intern at Kinectrics",
+    "content": "## Responsibilities\n\n- Developed anomaly detection models using LSTM and Transformer-based (TranAD) architectures for industrial systems.\n- Built and trained models using Python, TensorFlow, and PyTorch.\n- Designed a Streamlit dashboard for real-time anomaly visualization.\n- Collaborated with a team to deliver end-to-end AI solutions."
+  },
+  "work-infolib": {
+    "title": "IT / Software Intern at Infolib",
+    "content": "## Responsibilities\n\n- Worked with ERP and CRM systems to support business operations and client requests.\n- Collaborated with stakeholders to gather requirements and improve system workflows.\n- Provided technical support and contributed to task coordination within the intern team."
+  },
+  "work-nodo": {
+    "title": "Server at Nodo Hillcrest",
+    "content": "## Responsibilities\n\n- Delivered high-quality service to 200+ customers per shift in a fast-paced environment.\n- Managed order flow and trained new staff, ensuring smooth operations."
+  },
+  "edu-gbc-ai": {
+    "title": "George Brown College",
+    "content": "## Postgraduate Certificate – Applied Artificial Intelligence\n\n- Specialized in advanced machine learning and AI concepts.\n- Built foundational knowledge in deep learning and natural language processing."
+  },
+  "edu-gbc-mobile": {
+    "title": "George Brown College",
+    "content": "## Postgraduate Certificate – Mobile Application Development\n\n- Focused on advanced mobile system infrastructure and development principles."
+  },
+  "edu-tunisia": {
+    "title": "Tunisia",
+    "content": "## Bachelor’s Degree in Computer Science\n\n- Core foundation in systems, database management, computer networks, and software engineering."
+  },
+  "skillIcons": {
+    "categories": {
+      "Languages": "💻",
+      "AI / ML": "🧠",
+      "Web & Databases": "🌐",
+      "Tools": "🛠️",
+      "default": "⚡"
+    },
+    "items": {
+      "Python": "🐍",
+      "JavaScript": "⚛️",
+      "React": "⚛️",
+      "Java": "☕",
+      "TensorFlow": "🧠",
+      "PyTorch": "🧠",
+      "Firebase": "🗄️",
+      "MongoDB": "🗄️",
+      "Git": "📦",
+      "HTML": "🎨",
+      "CSS": "🎨",
+      "default": "⚡"
+    }
+  },
+  "uiConfig": {
+    "nav": {
+      "home": "Home",
+      "projects": "Projects",
+      "blog": "Blog",
+      "resume": "Download CV"
+    },
+    "sections": {
+      "skills": {
+        "navLabel": "Skills",
+        "title": "Technical Competencies",
+        "emoji": "🧠"
+      },
+      "experience": {
+        "navLabel": "Experience",
+        "title": "Professional Experience",
+        "emoji": "💼"
+      },
+      "education": {
+        "title": "Education",
+        "emoji": "🎓"
+      },
+      "certifications": {
+        "navLabel": "Certifications",
+        "title": "Certifications",
+        "emoji": "📜"
+      },
+      "contact": {
+        "title": "Let's Work Together"
+      }
+    },
+    "footer": {
+      "statusText": "All Systems Operational",
+      "rightsText": "All rights reserved."
+    }
+  }
+}

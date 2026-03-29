@@ -1,0 +1,90 @@
+---
+import BlogPost from "../../../layouts/BlogPost.astro";
+import { getAllPosts } from "../../../lib/blog";
+import { marked } from "marked";
+
+export async function getStaticPaths() {
+  const allPosts = await getAllPosts();
+  const devtoPosts = allPosts.filter((p) => p.isExternal);
+
+  return devtoPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+const post = Astro.props;
+let content = "";
+
+try {
+  const response = await fetch(`https://dev.to/api/articles/${post.id}`);
+  if (response.ok) {
+    const data = await response.json();
+    content = await marked.parse(data.body_markdown);
+  }
+} catch (error) {
+  console.error("Error fetching Dev.to article content:", error);
+}
+---
+
+<BlogPost
+  title={post.title}
+  description={post.description}
+  pubDate={post.pubDate}
+  heroImage={post.heroImage}
+  slug={post.slug}
+>
+  <div class="devto-content" set:html={content} />
+
+  <div
+    class="mt-12 p-6 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 text-center"
+  >
+    <p class="text-slate-600 dark:text-slate-400 mb-4">
+      This article was originally published on Dev.to
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a
+        href={post.originalUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-primary font-bold hover:underline"
+      >
+        Read original post on Dev.to ↗
+      </a>
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 font-bold hover:underline"
+      >
+        ← Back to all articles
+      </a>
+    </div>
+  </div>
+</BlogPost>
+
+<style is:global>
+  /* Basic Dev.to content styling if needed */
+  .devto-content h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--tw-prose-headings);
+  }
+  .devto-content p {
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+  }
+  .devto-content img {
+    border-radius: 0.75rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  .devto-content pre {
+    background-color: #1e293b;
+    color: #f8fafc;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+  }
+</style>

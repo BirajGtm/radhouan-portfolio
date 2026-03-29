@@ -1,0 +1,143 @@
+{
+  "basics": {
+    "name": "Radhouan Terchella",
+    "role": "AI / Full-Stack Developer",
+    "subRole": "Software Engineer",
+    "tagline": "AI and Full-Stack Developer with hands-on experience building machine learning systems and production-ready web applications.",
+    "email": "radhouan.terchella@gmail.com",
+    "phone": "437-933-2848",
+    "location": "Toronto, ON",
+    "status": "Open to Work",
+    "resumeUrl": "/Radhouan_Terchella_Resume.pdf"
+  },
+  "socials": [
+    { "network": "LinkedIn", "url": "https://linkedin.com/in/", "icon": "linkedin" },
+    { "network": "GitHub", "url": "https://github.com/", "icon": "github" }
+  ],
+  "work": [
+    {
+      "company": "Kinectrics",
+      "role": "AI / Software Developer Intern",
+      "detailId": "work-kinectrics",
+      "date": "2025",
+      "location": "Toronto",
+      "description": "Developed anomaly detection models and real-time visualization dashboards."
+    },
+    {
+      "company": "Infolib",
+      "role": "IT / Software Intern",
+      "detailId": "work-infolib",
+      "date": "Jan 2023 - Jun 2023",
+      "location": "Sousse, Tunisia",
+      "description": "Supported ERP/CRM operations and collaborated on system workflow improvements."
+    },
+    {
+      "company": "Nodo Hillcrest",
+      "role": "Server",
+      "detailId": "work-nodo",
+      "date": "Feb 2024 - Present",
+      "location": "Toronto",
+      "description": "Delivered high-quality customer service in a fast-paced environment."
+    }
+  ],
+  "education": [
+    {
+      "school": "George Brown College",
+      "detailId": "edu-gbc-ai",
+      "degree": "Postgraduate Certificate – Applied Artificial Intelligence",
+      "location": "Toronto, ON",
+      "date": "2025"
+    },
+    {
+      "school": "George Brown College",
+      "detailId": "edu-gbc-mobile",
+      "degree": "Postgraduate Certificate – Mobile Application Development",
+      "location": "Toronto, ON",
+      "date": "2024"
+    },
+    {
+      "school": "Tunisia",
+      "detailId": "edu-tunisia",
+      "degree": "Bachelor’s Degree in Computer Science",
+      "location": "Tunisia",
+      "date": "2020 - 2023"
+    }
+  ],
+  "certs": [],
+  "skills": [
+    {
+      "category": "Languages",
+      "items": [
+        { "name": "Python", "level": "expert", "featured": true },
+        { "name": "JavaScript", "level": "expert", "featured": true },
+        { "name": "Kotlin", "level": "advanced", "featured": false },
+        { "name": "Swift", "level": "advanced", "featured": false },
+        { "name": "Java", "level": "advanced", "featured": false },
+        { "name": "C", "level": "intermediate", "featured": false }
+      ]
+    },
+    {
+      "category": "AI / ML",
+      "items": [
+        { "name": "TensorFlow", "level": "expert", "featured": true },
+        { "name": "PyTorch", "level": "expert", "featured": true },
+        { "name": "LSTM", "level": "advanced", "featured": true },
+        { "name": "TranAD", "level": "advanced", "featured": false },
+        { "name": "Anomaly Detection", "level": "expert", "featured": true }
+      ]
+    },
+    {
+      "category": "Web & Databases",
+      "items": [
+        { "name": "React", "level": "advanced", "featured": true },
+        { "name": "HTML/CSS", "level": "expert", "featured": false },
+        { "name": "REST APIs", "level": "expert", "featured": true },
+        { "name": "Firebase", "level": "expert", "featured": true },
+        { "name": "MongoDB", "level": "advanced", "featured": true },
+        { "name": "MySQL", "level": "advanced", "featured": false }
+      ]
+    },
+    {
+      "category": "Tools",
+      "items": [
+        { "name": "Git", "level": "expert", "featured": true },
+        { "name": "Streamlit", "level": "advanced", "featured": true },
+        { "name": "Android Studio", "level": "advanced", "featured": false },
+        { "name": "SwiftUI", "level": "advanced", "featured": false },
+        { "name": "Figma", "level": "advanced", "featured": false }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "AskGeorge+ AI",
+      "description": "Built an AI-powered chatbot using NLP and embeddings to answer student-related queries.",
+      "tags": ["Python", "NLP", "Embeddings"],
+      "link": "/projects/ask-george",
+      "fallbackIcon": "python",
+      "category": "Coding",
+      "visible": true,
+      "featured": true
+    },
+    {
+      "title": "Restaurant Reservation System",
+      "description": "Developed a full-stack booking platform with Firebase for real-time reservations.",
+      "tags": ["Full-Stack", "Firebase", "Web"],
+      "link": "/projects/restaurant-reservation",
+      "fallbackIcon": "code",
+      "category": "Coding",
+      "visible": true,
+      "featured": true
+    },
+    {
+      "title": "Barbershop Website",
+      "description": "Designed and deployed a production website using React and Netlify. Integrated SimplyBook.me scheduling.",
+      "tags": ["React", "Netlify", "Web"],
+      "link": "/projects/barbershop",
+      "fallbackIcon": "react",
+      "category": "Coding",
+      "visible": true,
+      "featured": true
+    }
+  ]
+}

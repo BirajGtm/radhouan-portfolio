@@ -1,0 +1,250 @@
+---
+/**
+ * PROJECT DETAIL LAYOUT
+ * The 'Case Study' template for single project pages. Functions:
+ * 1. Dynamic Meta: Generates SEO tags and Article schema for each project.
+ * 2. Sidebar Stats: Renders the Role, Timeline, and Tech Stack badges.
+ * 3. Smart Suggestions: Fetches 2 similar projects in the same category for post-read navigation.
+ */
+import { type CollectionEntry, getCollection } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { Image } from "astro:assets";
+
+type Props = CollectionEntry<"projects">["data"];
+
+const {
+  title,
+  description,
+  heroImage,
+  stack,
+  repoUrl,
+  liveUrl,
+  role,
+  timeline,
+  category,
+} = Astro.props;
+
+// Fetch suggested projects (same category, excluding current, limit to 3)
+const allProjects = await getCollection("projects");
+const suggestedProjects = allProjects
+  .filter(
+    (p) =>
+      p.data.category === category &&
+      p.data.title !== title &&
+      p.data.visible !== false,
+  )
+  .slice(0, 2);
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+
+  <body class="bg-white dark:bg-darkBg transition-colors duration-300">
+    <Header />
+
+    <main class="max-w-6xl mx-auto px-4 pt-32 pb-20">
+      <div class="grid lg:grid-cols-[300px_1fr] gap-12 items-start">
+        {/* SIDEBAR */}
+        <aside
+          class="order-2 lg:order-1 sticky top-32 space-y-8 bg-slate-50 dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 backdrop-blur-sm shadow-sm"
+        >
+          {
+            role && (
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                  My Role
+                </span>
+                <p class="text-slate-900 dark:text-white font-semibold">
+                  {role}
+                </p>
+              </div>
+            )
+          }
+
+          {
+            timeline && (
+              <div class="space-y-1">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                  Timeline
+                </span>
+                <p class="text-slate-900 dark:text-white font-semibold font-mono text-sm">
+                  {timeline}
+                </p>
+              </div>
+            )
+          }
+
+          <div class="space-y-3">
+            <span
+              class="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500"
+              >Tech Stack</span
+            >
+            <div class="flex flex-wrap gap-2">
+              {
+                stack.map((tech: string) => (
+                  <span class="px-3 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 rounded-lg shadow-sm">
+                    {tech}
+                  </span>
+                ))
+              }
+            </div>
+          </div>
+
+          {
+            (repoUrl || liveUrl) && (
+              <div class="pt-4 flex flex-col gap-3">
+                {liveUrl && (
+                  <a
+                    href={liveUrl}
+                    target="_blank"
+                    class="w-full text-center px-6 py-3 bg-primary text-white rounded-xl font-bold text-sm hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/20 active:scale-95"
+                  >
+                    View Live Site ↗
+                  </a>
+                )}
+                {repoUrl && (
+                  <a
+                    href={repoUrl}
+                    target="_blank"
+                    class="w-full text-center px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all active:scale-95"
+                  >
+                    View Code Source
+                  </a>
+                )}
+              </div>
+            )
+          }
+        </aside>
+
+        {/* CONTENT AREA */}
+        <article class="order-1 lg:order-2 space-y-12">
+          {/* HERO IMAGE */}
+          <div
+            class="relative group rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900"
+          >
+            {
+              heroImage ? (
+                <Image
+                  width={1020}
+                  height={510}
+                  src={heroImage}
+                  alt={title}
+                  class="w-full h-auto"
+                />
+              ) : (
+                <div class="aspect-video flex flex-col items-center justify-center p-12 bg-gradient-to-br from-slate-50 to-slate-200 dark:from-slate-800 dark:to-slate-900">
+                  <span class="text-8xl mb-4">🚀</span>
+                  <h3 class="text-2xl font-black text-slate-400 dark:text-slate-600 uppercase tracking-tighter">
+                    {title}
+                  </h3>
+                </div>
+              )
+            }
+          </div>
+
+          {/* TEXT CONTENT */}
+          <div
+            class="prose prose-slate dark:prose-invert max-w-none
+            prose-headings:text-slate-900 dark:prose-headings:text-white
+            prose-h1:text-4xl lg:prose-h1:text-5xl prose-h1:font-black prose-h1:tracking-tight
+            prose-p:text-lg prose-p:leading-relaxed prose-p:text-slate-600 dark:prose-p:text-slate-400
+            prose-strong:text-primary dark:prose-strong:text-blue-400
+            prose-hr:border-slate-200 dark:prose-hr:border-slate-800"
+          >
+            <header class="not-prose mb-12">
+              <h1
+                class="text-4xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight mb-4"
+              >
+                {title}
+              </h1>
+              <p class="text-xl text-slate-500 dark:text-slate-400 font-medium">
+                {description}
+              </p>
+              <div class="h-1 w-20 bg-primary mt-8 rounded-full"></div>
+            </header>
+
+            <div class="content-body">
+              <slot />
+            </div>
+
+            {/* SUGGESTED PROJECTS SECTION */}
+            {
+              suggestedProjects.length > 0 && (
+                <div class="mt-24 pt-12 border-t border-slate-200 dark:border-slate-800">
+                  <div class="flex items-center justify-between mb-8">
+                    <div>
+                      <h3 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+                        Suggested Projects
+                      </h3>
+                      <p class="text-sm text-slate-500 dark:text-slate-400">
+                        Other {category} projects you might be interested in
+                      </p>
+                    </div>
+                    <a
+                      href="/projects"
+                      class="text-primary font-bold hover:underline flex items-center gap-1 group"
+                    >
+                      See All Projects
+                      <span class="group-hover:translate-x-1 transition-transform">
+                        →
+                      </span>
+                    </a>
+                  </div>
+
+                  <div class="grid sm:grid-cols-2 gap-6">
+                    {suggestedProjects.map((p) => (
+                      <a
+                        href={`/projects/${p.id.replace(/\.md$/, "")}`}
+                        class="group relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:border-primary/50 transition-all shadow-sm overflow-hidden text-decoration-none"
+                      >
+                        <div class="absolute top-0 right-0 w-16 h-16 bg-primary/5 rounded-bl-3xl -mr-4 -mt-4 group-hover:bg-primary/10 transition-colors" />
+                        <div class="relative z-10 flex flex-col h-full">
+                          <div class="text-[10px] font-black uppercase tracking-widest text-primary mb-2">
+                            Next Read
+                          </div>
+                          <h4 class="text-lg font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
+                            {p.data.title}
+                          </h4>
+                          <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+                            {p.data.description}
+                          </p>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )
+            }
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <Footer />
+
+    <style is:global>
+      @reference "../styles/global.css";
+
+      /* Custom styles for rendered markdown content specifically within project pages */
+      .content-body h2 {
+        @apply text-2xl font-bold text-slate-900 dark:text-white mt-12 mb-6 flex items-center gap-2;
+      }
+      .content-body p {
+        @apply my-6 text-slate-600 dark:text-slate-400 leading-relaxed;
+      }
+      .content-body ul {
+        @apply list-disc list-outside pl-6 space-y-3 my-6 text-slate-600 dark:text-slate-400;
+      }
+      .content-body li {
+        @apply marker:text-primary;
+      }
+      .content-body code {
+        @apply px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-primary dark:text-blue-400 font-mono text-sm;
+      }
+    </style>
+  </body>
+</html>

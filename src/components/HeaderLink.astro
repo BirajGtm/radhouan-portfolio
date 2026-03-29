@@ -1,0 +1,63 @@
+---
+/**
+ * NAVIGATION LINK COMPONENT
+ * An intelligent link wrapper that:
+ * 1. Detects Active State: Automatically applies bold/underline if the current path matches.
+ * 2. Path Normalization: Handles trailing slashes for consistent active detection.
+ */
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"a">;
+
+const { href, class: className, ...props } = Astro.props;
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+const subpath = pathname.match(/[^\/]+/g);
+const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
+---
+
+<a href={href} class:list={[className, { active: isActive }]} {...props}>
+  <slot />
+</a>
+<style>
+  a {
+    display: inline-block;
+    text-decoration: none;
+    position: relative;
+    padding: 0.25rem 0;
+    color: #64748b; /* slate-500 */
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  :global(.dark) a {
+    color: #94a3b8; /* slate-400 */
+  }
+  a:hover {
+    color: #06b6d4; /* primary/cyan-500 */
+  }
+  :global(.dark) a:hover {
+    color: #22d3ee; /* cyan-400 */
+  }
+  a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #06b6d4;
+    transition: width 0.3s ease;
+  }
+  a.active {
+    color: #06b6d4;
+    font-weight: 700;
+  }
+  :global(.dark) a.active {
+    color: #22d3ee;
+  }
+  a.active::after {
+    width: 100%;
+  }
+  a:hover::after {
+    width: 100%;
+  }
+</style>

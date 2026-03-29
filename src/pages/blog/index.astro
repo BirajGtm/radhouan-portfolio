@@ -1,0 +1,45 @@
+---
+/**
+ * BLOG DIRECTORY PAGE
+ * The primary listing page for all technical articles.
+ * - Fetches and sorts blog posts by publication date.
+ * - Leverages BlogGrid for advanced search, tag filtering, and dynamic feature-post highlighting.
+ */
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import BlogGrid from "../../components/BlogGrid.jsx";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { getAllPosts } from "../../lib/blog";
+
+const allPosts = await getAllPosts();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body
+    class="bg-white dark:bg-darkBg text-slate-900 dark:text-slate-200 font-sans transition-colors duration-300 flex flex-col min-h-screen"
+  >
+    <Header />
+    <main class="flex-grow">
+      <section class="max-w-5xl mx-auto px-4 py-20">
+        <div class="mb-12 text-center md:text-left">
+          <h1
+            class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-4"
+          >
+            Blog & Documentation
+          </h1>
+          <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
+            Thoughts, tutorials, and documentation on my journey through tech.
+          </p>
+        </div>
+
+        <BlogGrid client:load posts={allPosts} />
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>

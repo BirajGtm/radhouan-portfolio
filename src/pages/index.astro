@@ -1,0 +1,426 @@
+---
+/**
+ * HOMEPAGE ASSEMBLY
+ * This is the main entry point of the site. It handles:
+ * 1. Hybrid Data Fetching: Combines portfolio.json data with Astro Content Collections.
+ * 2. Specialized Filtering: Separates 'Featured' skills and 'Featured' projects for a clean grid layout.
+ * 3. Component Orchestration: Integrates the Interactive Terminal, Skills Manager, and Timeline sections.
+ */
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProjectCard from '../components/ProjectCard.jsx';
+import InteractiveList from '../components/InteractiveList.jsx';
+import InteractiveTerminal from '../components/InteractiveTerminal.jsx';
+import NetworkBackground from '../components/NetworkBackground.jsx';
+import data from '../data/portfolio.json';
+import details from '../data/details.json';
+import SkillsManager from '../components/SkillsManager.jsx';
+import { getCollection } from 'astro:content';
+import { getAllPosts } from '../lib/blog';
+
+// Fetch Blog Posts (Sort by newest, combined local and Dev.to)
+const posts = (await getAllPosts()).slice(0, 3);
+
+// Fetch Projects (Filter by visibility & featured, limit to 3)
+const projects = (await getCollection('projects'))
+	.filter(p => p.data.visible !== false && p.data.featured === true)
+	.slice(0, 3);
+
+// Attach HTML content to work/education items
+function enhanceData(items: any[]) {
+    if (!items) return [];
+    return items.map((item: any) => {
+        if (item.detailId && details[item.detailId as keyof typeof details]) {
+            const detailContent = details[item.detailId as keyof typeof details] as any;
+            return { 
+                ...item, 
+                html: detailContent.content,
+                achievements: detailContent.achievements || [] 
+            };
+        }
+        return item;
+    });
+}
+
+const enhancedWork = enhanceData(data.work);
+const enhancedEducation = enhanceData(data.education);
+
+// Filter skills for the featured grid (only show categories that have featured items)
+const featuredSkills = data.skills
+	.map(cat => ({
+		...cat,
+		items: cat.items.filter(i => i.featured)
+	}))
+	.filter(cat => cat.items.length > 0);
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+	<head>
+		<BaseHead title={`${data.basics.name} | ${data.basics.role}`} description={data.basics.tagline} />
+	</head>
+	<body class="bg-slate-50 dark:bg-[#030712] text-slate-900 dark:text-slate-200 font-sans transition-colors duration-300 flex flex-col min-h-screen relative">
+		<!-- Global Particle Background -->
+		<NetworkBackground client:only="react" />
+
+		<Header />
+		
+		<main class="flex-grow relative z-10">
+			
+			<!-- =========================================
+			     HERO SECTION
+			     ========================================= -->
+			<section id="hero" class="relative min-h-[90vh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-gradient-to-b from-transparent to-slate-200/50 dark:to-[#030712]/90 transition-colors border-b border-slate-300/50 dark:border-slate-700/80">
+				<!-- Glow Effects -->
+				<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-3xl max-h-3xl bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+				<!-- 2-Column Hero Layout -->
+				<div class="relative z-10 w-full max-w-6xl mx-auto px-4 mt-8 md:mt-16 grid lg:grid-cols-2 gap-12 items-center">
+					<!-- Left: Hero Text in Frosted Container -->
+					<div class="bg-white/70 dark:bg-slate-900/70 backdrop-blur-3xl border border-white/50 dark:border-slate-800 shadow-2xl shadow-cyan-500/10 rounded-3xl p-8 md:p-10 text-left transform transition-all hover:scale-[1.01] duration-500">
+						<!-- Status Badge -->
+						<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-50 dark:bg-slate-950/80 border border-cyan-100 dark:border-slate-700/50 text-sm font-bold text-cyan-700 dark:text-cyan-400 mb-8 shadow-sm">
+							<span class="relative flex h-2.5 w-2.5">
+								<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+								<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
+							</span>
+							{data.basics.status}
+						</div>
+
+						<h1 class="text-5xl md:text-6xl font-black text-slate-900 dark:text-white leading-[1.1] mb-6 tracking-tight">
+							Hi, I'm <br class="hidden md:block"/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-cyan-600">{data.basics.name}</span>
+						</h1>
+						
+						<p class="text-lg md:text-xl text-slate-700 dark:text-slate-300 max-w-xl mb-10 leading-relaxed font-semibold">
+							{data.basics.tagline}
+						</p>
+
+						<div class="flex flex-col sm:flex-row items-center gap-4 mb-10">
+							<a href="/resume.pdf" class="w-full sm:w-auto bg-cyan-500 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-cyan-600 transition-all shadow-lg shadow-cyan-500/20 active:scale-95 text-base flex items-center justify-center gap-2">
+								{details.uiConfig.nav.resume}
+							</a>
+							<a href="#projects" class="w-full sm:w-auto border-2 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-8 py-3.5 rounded-xl font-bold hover:border-cyan-500 dark:hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all active:scale-95 text-base flex items-center justify-center gap-2">
+								View {details.uiConfig.nav.projects}
+							</a>
+						</div>
+
+						<!-- Social Links Grid underneath -->
+						<div class="flex items-center flex-wrap gap-6 pt-6 border-t border-slate-200 dark:border-slate-800/50">
+							{data.socials.map((social) => (
+								<a href={social.url} target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-cyan-500 dark:text-slate-400 dark:hover:text-cyan-400 transition-colors hover:-translate-y-1 transform duration-300" aria-label={`Follow on ${social.network}`}>
+									<span class="font-bold tracking-wide uppercase text-sm border-b-2 border-transparent hover:border-cyan-500 pb-1">{social.network}</span>
+								</a>
+							))}
+						</div>
+					</div>
+
+					<!-- Right: Embedded Terminal -->
+					<div class="hidden lg:block w-full transform hover:-translate-y-2 transition-transform duration-500">
+						<InteractiveTerminal client:load data={data} isModal={false} />
+					</div>
+				</div>
+			</section>
+
+			<!-- =========================================
+			     SKILLS
+			     ========================================= -->
+			<section id="skills" class="bg-slate-100/80 dark:bg-slate-900/80 backdrop-blur-md border-y border-slate-300/50 dark:border-slate-700/80 shadow-inner">
+				<div class="max-w-5xl mx-auto px-4 py-16">
+					<div class="mb-10">
+						<h2 class="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-slate-800/50 shadow-sm text-3xl font-bold text-slate-900 dark:text-white">
+							<span class="text-primary">{details.uiConfig.sections.skills.emoji}</span> {details.uiConfig.sections.skills.title}
+						</h2>
+					</div>
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+						{featuredSkills.map((category) => (
+							<div class={`bg-gradient-to-b from-white/80 to-white/40 dark:from-slate-900/80 dark:to-slate-900/40 backdrop-blur-2xl border border-white/50 dark:border-slate-800 shadow-xl hover:shadow-2xl hover:shadow-primary/10 rounded-3xl p-6 md:p-8 transition-all duration-500 group/cat relative overflow-hidden ${
+								category.category === 'Languages' ? 'md:col-span-2 lg:col-span-2' :
+								category.category === 'AI / ML' ? 'md:col-span-2 lg:col-span-2' :
+								category.category === 'Web & Databases' ? 'md:col-span-1 lg:col-span-2' :
+								'md:col-span-1 lg:col-span-2'
+							}`}>
+								{/* Subtle category decoration */}
+								<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-[40px] group-hover/cat:bg-primary/20 transition-colors duration-500"></div>
+
+								<h4 class="text-xl font-black mb-6 text-slate-900 dark:text-white flex items-center gap-3 relative z-10">
+									<span class="p-2 bg-slate-100 dark:bg-slate-800 rounded-xl shadow-inner text-xl">
+										{details.skillIcons?.categories?.[category.category as keyof typeof details.skillIcons.categories] || details.skillIcons?.categories?.default || "⚡"}
+									</span> 
+									{category.category}
+								</h4>
+								<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+									{category.items.map((skill) => (
+										<div class="flex items-center gap-4 bg-white/50 dark:bg-slate-950/50 p-3 rounded-2xl border border-white/60 dark:border-slate-800/60 hover:border-primary/40 dark:hover:border-primary/40 transition-colors shadow-sm">
+											<div class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 shadow-inner text-xl flex-shrink-0">
+												{details.skillIcons?.items?.[skill.name as keyof typeof details.skillIcons.items] || details.skillIcons?.items?.default || "⚡"}
+											</div>
+											<div class="flex-grow min-w-0">
+												<div class="flex flex-col gap-1.5">
+													<div class="flex items-center justify-between">
+														<span class="text-sm font-bold text-slate-800 dark:text-slate-200 truncate pr-2">{skill.name}</span>
+														<span class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500">{skill.level}</span>
+													</div>
+													<div class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden shadow-inner">
+														{(() => {
+															const percent = skill.level.toLowerCase() === 'expert' ? '100%' : 
+																			skill.level.toLowerCase() === 'advanced' ? '75%' : 
+																			skill.level.toLowerCase() === 'intermediate' ? '50%' : '25%';
+															return (
+																<div 
+																	class="h-full bg-gradient-to-r from-cyan-400 to-primary rounded-full shadow-[0_0_10px_rgba(6,182,212,0.5)]" 
+																	style={`width: ${percent}`}
+																></div>
+															);
+														})()}
+													</div>
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
+							</div>
+						))}
+					</div>
+
+					<SkillsManager client:load allSkills={data.skills} />
+				</div>
+			</section>
+
+			<!-- =========================================
+			     PROFESSIONAL EXPERIENCE
+			     ========================================= -->
+			<section id="experience" class="bg-white/80 dark:bg-[#050b14]/80 backdrop-blur-md border-y border-slate-300/50 dark:border-slate-700/80 shadow-inner w-full">
+				<div class="max-w-4xl mx-auto px-4 py-20">
+					<div class="mb-10 text-center sm:text-left">
+						<h2 class="inline-flex items-center justify-center sm:justify-start gap-3 px-6 py-3 rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-slate-800/50 shadow-sm text-3xl font-bold text-slate-900 dark:text-white w-full sm:w-auto">
+							<span class="text-primary">{details.uiConfig.sections.experience.emoji}</span> {details.uiConfig.sections.experience.title}
+						</h2>
+					</div>
+					<InteractiveList client:load items={enhancedWork} type="work" />
+				</div>
+			</section>
+
+			<!-- =========================================
+			     EDUCATION
+			     ========================================= -->
+			<section id="education" class="bg-slate-100/80 dark:bg-slate-900/80 backdrop-blur-md border-y border-slate-300/50 dark:border-slate-700/80 shadow-inner w-full">
+				<div class="max-w-4xl mx-auto px-4 py-20">
+					<div class="mb-10 text-center sm:text-left">
+						<h2 class="inline-flex items-center justify-center sm:justify-start gap-3 px-6 py-3 rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-slate-800/50 shadow-sm text-3xl font-bold text-slate-900 dark:text-white w-full sm:w-auto">
+							<span class="text-primary">{details.uiConfig.sections.education.emoji}</span> {details.uiConfig.sections.education.title}
+						</h2>
+					</div>
+					<InteractiveList client:load items={enhancedEducation} type="education" />
+				</div>
+			</section>
+
+			<!-- =========================================
+			     CERTIFICATIONS
+			     ========================================= -->
+			{data.certs && data.certs.length > 0 && (
+			<section id="certifications" class="bg-white/80 dark:bg-[#050b14]/80 backdrop-blur-md border-y border-slate-300/50 dark:border-slate-700/80 shadow-inner w-full">
+				<div class="max-w-4xl mx-auto px-4 py-20">
+					<div class="mb-10 text-center sm:text-left">
+						<h2 class="inline-flex items-center justify-center sm:justify-start gap-3 px-6 py-3 rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-slate-800/50 shadow-sm text-3xl font-bold text-slate-900 dark:text-white w-full sm:w-auto">
+							<span class="text-primary">{details.uiConfig.sections.certifications.emoji}</span> {details.uiConfig.sections.certifications.title}
+						</h2>
+					</div>
+						
+						<div class="flex flex-col gap-4">
+							{(data.certs as any[]).map((cert: any) => (
+								<a 
+									href={cert.url} 
+									target="_blank"
+									class="group flex items-center gap-4 p-4 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 hover:border-primary hover:shadow-lg transition-all duration-300 relative overflow-hidden backdrop-blur-md"
+								>
+									<!-- Hover Effect Background -->
+									<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+									<!-- Icon / Issuer Badge -->
+									<div class="flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 group-hover:scale-105 transition-transform z-10">
+										<span class="text-2xl">
+											{cert.issuer.includes('Microsoft') ? '🟦' : 
+											 cert.issuer.includes('Cisco') ? '📡' : 
+											 cert.issuer.includes('Fortinet') ? '🛡️' : 
+											 '🏅'}
+										</span>
+									</div>
+
+									<!-- Content -->
+									<div class="flex-grow min-w-0 z-10">
+										<h3 class="text-base md:text-lg font-bold text-slate-900 dark:text-white truncate group-hover:text-primary transition-colors">
+											{cert.name}
+										</h3>
+										<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+											<span>{cert.issuer}</span>
+											<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+											<span>{cert.date}</span>
+										</div>
+									</div>
+
+									<!-- Verify Action -->
+									<div class="hidden sm:flex items-center gap-1 text-xs font-bold text-primary opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 z-10">
+										VERIFY <span>↗</span>
+									</div>
+									<div class="sm:hidden text-slate-300 group-hover:text-primary z-10">↗</div>
+								</a>
+							))}
+						</div>
+					</div>
+				</section>
+				)}
+
+			<!-- =========================================
+			     PROJECTS
+			     ========================================= -->
+			<section id="projects" class="bg-slate-100/80 dark:bg-slate-900/80 backdrop-blur-md transition-colors border-y border-slate-300/50 dark:border-slate-700/80 shadow-inner">
+				<div class="max-w-5xl mx-auto px-4 py-20">
+					<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-12">
+						<h2 class="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-slate-800/50 shadow-sm text-3xl font-bold text-slate-900 dark:text-white">
+							<span class="text-cyan-500 drop-shadow-sm">🚀</span> Featured Projects
+						</h2>
+						<a href="/projects" class="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-700 hover:border-cyan-500 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)] text-sm font-bold text-slate-700 dark:text-slate-200 transition-all group">
+							View All 
+							<span class="transform group-hover:translate-x-1 transition-transform text-cyan-500">→</span>
+						</a>
+					</div>
+					<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+						{projects.map((project) => (
+							<ProjectCard 
+								client:visible 
+								title={project.data.title}
+								description={project.data.description}
+								tags={project.data.stack}
+								link={`/projects/${project.id.replace(/\.md$/, '')}`}
+								image={project.data.heroImage}
+								fallbackIcon={project.data.category === 'IT' ? 'shield' : (project.data.stack?.[0]?.toLowerCase() === 'python' ? 'python' : 'code')}
+								category={project.data.category}
+							/>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<!-- =========================================
+			     LATEST BLOG POSTS (New Premium Design)
+			     ========================================= -->
+			<section id="blog" class="bg-white/80 dark:bg-[#050b14]/80 backdrop-blur-md transition-colors border-y border-slate-300/50 dark:border-slate-700/80 shadow-inner">
+				<div class="max-w-5xl mx-auto px-4 py-20">
+					<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-12">
+					<h2 class="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-slate-800/50 shadow-sm text-3xl font-bold text-slate-900 dark:text-white">
+						<span class="text-cyan-500 drop-shadow-sm">✍️</span> Latest Blog Posts
+					</h2>
+					<a href="/blog" class="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-700 hover:border-cyan-500 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)] text-sm font-bold text-slate-700 dark:text-slate-200 transition-all group">
+						Read Blog 
+						<span class="transform group-hover:translate-x-1 transition-transform text-cyan-500">→</span>
+					</a>
+				</div>
+				<div class="grid md:grid-cols-3 gap-6">
+					{posts.map((post) => (
+						<a 
+							href={post.isExternal ? `/blog/devto/${post.slug}/` : `/blog/${post.id}/`} 
+							class="group relative flex flex-col h-full bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 hover:shadow-2xl hover:border-primary/30 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+						>
+							
+							<!-- 1. Gradient Overlay (Appears on Hover) -->
+							<div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+							<!-- 2. Header: Date & Icon -->
+							<div class="relative flex items-center justify-between mb-4 z-10">
+								<span class="text-xs font-mono font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded border border-slate-200 dark:border-slate-700 group-hover:border-primary/30 transition-colors">
+									{post.pubDate.toLocaleDateString()}
+								</span>
+								
+								{post.isExternal ? (
+									<span class="text-xs font-bold text-primary bg-primary/5 px-2 py-1 rounded">Dev.to</span>
+								) : (
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-300 dark:text-slate-600 group-hover:text-primary transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+										<polyline points="14 2 14 8 20 8"/>
+									</svg>
+								)}
+							</div>
+
+							<!-- 3. Content -->
+							<div class="relative flex-grow z-10">
+								<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors leading-tight">
+									{post.title}
+								</h3>
+								<p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed mb-6">
+									{post.description}
+								</p>
+							</div>
+
+							<!-- 4. Footer: 'Read Article' Link -->
+							<div class="relative mt-auto flex items-center text-primary font-bold text-sm z-10">
+								Read Article 
+								<span class="ml-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+							</div>
+						</a>
+					))}
+				</div>
+			</section>
+
+			<!-- =========================================
+			     CONTACT SECTION
+			     ========================================= -->
+			<section id="contact" class="bg-gradient-to-br from-cyan-100/90 via-white/90 to-slate-100/90 dark:from-[#030712]/95 dark:via-slate-950/95 dark:to-[#050b14]/95 backdrop-blur-xl border-y border-slate-300/50 dark:border-slate-700/80 shadow-inner">
+				<div class="max-w-4xl mx-auto px-4 py-20 text-center">
+					<div class="mb-4 flex justify-center">
+						<h2 class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-slate-800/50 shadow-sm text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
+							{details.uiConfig.sections.contact.title}
+						</h2>
+					</div>
+					<p class="text-lg text-slate-800 dark:text-slate-200 font-medium mb-8 max-w-xl mx-auto bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl border border-white/50 dark:border-slate-800/50 py-3 px-6 rounded-2xl shadow-sm">
+						I'm currently {data.basics.status.toLowerCase()} and available for new opportunities. Feel free to reach out!
+					</p>
+					
+					<!-- Availability Badge -->
+					<div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700/50 text-cyan-700 dark:text-cyan-400 font-bold tracking-wide mb-8 shadow-sm backdrop-blur-md">
+						<span class="relative flex h-2.5 w-2.5">
+							<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+							<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
+						</span>
+						{data.basics.status}
+					</div>
+					
+					<!-- Contact Methods -->
+					<div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+						<a 
+							href={`mailto:${data.basics.email}`}
+							class="group flex items-center gap-3 px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-cyan-600 transition-all shadow-lg shadow-primary/20 hover:shadow-xl"
+						>
+							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+							</svg>
+							{data.basics.email}
+						</a>
+						
+						<a 
+							href={`tel:${data.basics.phone}`}
+							class="flex items-center gap-3 px-6 py-3 border-2 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
+						>
+							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+							</svg>
+							{data.basics.phone}
+						</a>
+					</div>
+					
+					<!-- Social Links -->
+					<div class="flex gap-4 justify-center">
+						<a href={data.socials[0].url} target="_blank" rel="noopener noreferrer" class="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="GitHub">
+							<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+						</a>
+						<a href=data.socials[1].url target="_blank" rel="noopener noreferrer" class="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-primary hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="LinkedIn">
+							<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+						</a>
+					</div>
+				</div>
+			</section>
+
+		</main>
+		<Footer />
+	</body>
+</html>

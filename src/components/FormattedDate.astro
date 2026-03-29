@@ -1,0 +1,22 @@
+---
+/**
+ * DATE FORMATTER UTILITY
+ * Standardizes the display of ISO strings into human-readable browser locales.
+ * Used across the Blog and Timeline for UI consistency.
+ */
+interface Props {
+  date: Date;
+}
+
+const { date } = Astro.props;
+---
+
+<time datetime={date.toISOString()}>
+  {
+    date.toLocaleDateString("en-us", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
+  }
+</time>
