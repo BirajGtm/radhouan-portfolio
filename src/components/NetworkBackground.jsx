@@ -72,18 +72,13 @@ export default function NetworkBackground() {
 
     const resize = () => {
       if (!canvas) return;
-      // Get exact layout size, fallback to window if layout isn't painted yet
-      canvas.width = canvas.offsetWidth || window.innerWidth;
-      canvas.height = canvas.offsetHeight || window.innerHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
       init();
     };
 
-    const resizeObserver = new ResizeObserver(() => {
-      resize();
-    });
-    resizeObserver.observe(canvas);
-
-    // Initial sizing
+    const resizeObserver = new ResizeObserver(() => resize());
+    resizeObserver.observe(document.documentElement);
     resize();
 
     // Track mouse
@@ -137,7 +132,7 @@ export default function NetworkBackground() {
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed inset-0 w-full h-full pointer-events-none opacity-60 dark:opacity-40 -z-10"
+      className="fixed inset-0 w-full h-full pointer-events-none opacity-30 dark:opacity-70 -z-10"
     />
   );
 }

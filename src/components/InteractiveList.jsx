@@ -64,7 +64,7 @@ export default function InteractiveList({ items, type }) {
               {type === 'work' && (
                 <div className="relative pl-10 pb-2">
                   <div className="absolute -left-[10.5px] top-1 w-5 h-5 rounded-full bg-slate-900 border-4 border-primary group-hover:bg-cyan-400 group-hover:shadow-[0_0_20px_rgba(6,182,212,1)] group-hover:scale-125 transition-all duration-300 z-10"></div>
-                  <div className="bg-white/60 dark:bg-slate-900/60 p-6 rounded-3xl border border-white/50 dark:border-slate-700/50 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-500 backdrop-blur-xl relative overflow-hidden">
+                  <div className="bg-white/60 dark:bg-slate-900/60 p-6 rounded-3xl border border-slate-200 dark:border-slate-700/50 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 transition-all duration-500 backdrop-blur-xl relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-primary/10 transition-colors"></div>
                     
                     <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors flex items-center justify-between">
@@ -96,7 +96,7 @@ export default function InteractiveList({ items, type }) {
                   {/* Mobile View */}
                   <div className="md:hidden relative border-l-[3px] border-primary/30 pl-8 space-y-2 pb-4">
                     <div className="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-slate-900 border-[3px] border-primary group-hover:bg-cyan-400 group-hover:shadow-[0_0_15px_rgba(6,182,212,1)] transition-colors"></div>
-                    <div className="bg-white/60 dark:bg-slate-900/60 p-5 rounded-3xl border border-white/50 dark:border-slate-700/50 hover:border-primary/50 hover:shadow-xl transition-all duration-300 backdrop-blur-xl">
+                    <div className="bg-white/60 dark:bg-slate-900/60 p-5 rounded-3xl border border-slate-200 dark:border-slate-700/50 hover:border-primary/50 hover:shadow-xl transition-all duration-300 backdrop-blur-xl">
                       <div className="text-sm font-mono text-slate-400 dark:text-slate-500 mb-2">{item.date}</div>
                       <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors flex items-center justify-between">
                         <span>{item.school}</span>
