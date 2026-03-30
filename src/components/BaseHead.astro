@@ -58,22 +58,10 @@ const { title, description, image = "/blog-placeholder-1.jpg" } = Astro.props;
 <!-- Dark Mode Initialization Script (Prevents flash of white on load) -->
 <script is:inline>
   const theme = (() => {
-    // 1. Check LocalStorage
     if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
       return localStorage.getItem("theme");
     }
-
-    // 2. Check Time of Day (6 PM to 6 AM is night)
-    const hour = new Date().getHours();
-    if (hour >= 18 || hour < 6) {
-      return "dark";
-    }
-
-    // 3. Fallback to System Preference
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
-    }
-    return "light";
+    return "dark";
   })();
 
   if (theme === "dark") {
