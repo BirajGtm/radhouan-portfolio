@@ -1,15 +1,17 @@
 {
   "work-kinectrics": {
     "title": "AI / Software Developer Intern at Kinectrics",
-    "content": "## Responsibilities\n\n- Developed anomaly detection models using LSTM and Transformer-based (TranAD) architectures for industrial systems.\n- Built and trained models using Python, TensorFlow, and PyTorch.\n- Designed a Streamlit dashboard for real-time anomaly visualization.\n- Collaborated with a team to deliver end-to-end AI solutions."
+    "content": "## Responsibilities\n\n- Designed and implemented anomaly detection systems using LSTM and Transformer-based (TranAD) architectures on industrial time-series data.\n- Built end-to-end machine learning pipelines, including data preprocessing, model training, and evaluation using Python, TensorFlow, and PyTorch.\n- Developed an interactive Streamlit dashboard for real-time anomaly monitoring and system insights.\n- Collaborated with engineering teams to integrate AI models into practical operational workflows.\n\n## Impact\n\n- Achieved high anomaly detection performance (F1-score ~0.95) while maintaining zero false-negative critical events.\n- Reduced false positives through advanced threshold tuning and model optimization.\n- Enabled real-time monitoring capabilities for engineers, improving system visibility and response time.\n- Contributed to deploying production-ready AI solutions within industrial environments."
   },
+
   "work-infolib": {
     "title": "IT / Software Intern at Infolib",
-    "content": "## Responsibilities\n\n- Worked with ERP and CRM systems to support business operations and client requests.\n- Collaborated with stakeholders to gather requirements and improve system workflows.\n- Provided technical support and contributed to task coordination within the intern team."
+    "content": "## Responsibilities\n\n- Worked with ERP and CRM systems to support business operations and client requests.\n- Collaborated with stakeholders to gather requirements and improve system workflows.\n- Provided technical support and contributed to task coordination within the intern team.\n\n## Impact\n\n- Improved system usability by optimizing internal workflows and data handling.\n- Reduced recurring technical issues through effective troubleshooting.\n- Enhanced operational efficiency by supporting reliable system performance.\n- Contributed to smoother coordination between technical and business teams."
   },
+
   "work-nodo": {
-    "title": "Server at Nodo Hillcrest",
-    "content": "## Responsibilities\n\n- Delivered high-quality service to 200+ customers per shift in a fast-paced environment.\n- Managed order flow and trained new staff, ensuring smooth operations."
+    "title": "IT Technician at ABS Confection",
+    "content": "## Responsibilities\n\n- Provided technical support for internal systems and business applications.\n- Maintained and updated a staff scheduling system to ensure accurate shift tracking.\n- Managed inventory tracking tools and ensured data consistency across records.\n- Assisted in optimizing database workflows to improve usability and efficiency.\n- Diagnosed and resolved software-related issues to minimize downtime.\n\n## Impact\n\n- Improved operational efficiency by streamlining internal processes.\n- Reduced system errors and manual inconsistencies through better data handling.\n- Ensured stable day-to-day system performance for business operations."
   },
   "edu-gbc-ai": {
     "title": "George Brown College",

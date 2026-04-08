@@ -19,6 +19,12 @@
         "heroImage": {
           "type": "string"
         },
+        "image": {
+          "type": "string"
+        },
+        "fallbackIcon": {
+          "type": "string"
+        },
         "repoUrl": {
           "type": "string"
         },
@@ -41,6 +47,9 @@
         },
         "category": {
           "type": "string"
+        },
+        "order": {
+          "type": "number"
         },
         "$schema": {
           "type": "string"

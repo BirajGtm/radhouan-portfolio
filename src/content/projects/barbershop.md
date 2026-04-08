@@ -1,17 +1,39 @@
 ---
-title: "Barbershop Website"
-description: "Designed and deployed a production website using React and Netlify. Integrated SimplyBook.me scheduling."
-stack: ["React", "Netlify", "Web", "SimplyBook.me"]
+title: "Tom’s Barbershop Platform"
+description: "Developed a production-grade barbershop management platform with booking, payments, scheduling, and business automation features."
+stack: ["React", "Netlify", "SimplyBook.me", "Payments", "Scheduling Systems"]
 repoUrl: "#"
 liveUrl: "https://tomsbarber.ca"
 category: "Coding"
 visible: true
 featured: true
+image: "../../assets/projects/toms-barbershop.png"
+order: 1
 ---
 
-A premium production website designed and deployed exclusively for a high-end barbershop (tomsbarber.ca).
+## Overview
 
-## Key Technical Features
-- Built entirely within **React** leveraging a fully responsive layout.
-- Deployed through a fast and continuous integration pipeline via **Netlify**.
-- Features third-party API integration with **SimplyBook.me** to handle reliable customer scheduling and payments robustly within the user experience.
+This project is a fully functional barbershop platform currently used in a real business environment. It handles customer bookings, staff scheduling, payments, and operational workflows.
+
+## Key Features
+
+- Online booking system with real-time availability
+- Staff scheduling and time-off management
+- Integrated payment options (online & in-shop)
+- Automated email confirmations and reminders
+- Product/service management and pricing logic
+- Seamless user experience for both customers and barbers
+
+## Technical Work
+
+- Integrated SimplyBook.me for scheduling and staff management
+- Designed booking flows and user interactions for a smooth UX
+- Implemented business logic for payments, scheduling, and availability
+- Deployed the platform using Netlify for production use
+
+## Impact
+
+- Used in a real-world barbershop environment for daily operations
+- Automated booking and scheduling processes
+- Improved customer experience and reduced manual coordination
+- Demonstrated ability to deliver a complete business solution end-to-end

@@ -3,7 +3,7 @@
     "name": "Radhouan Terchella",
     "role": "AI / Full-Stack Developer",
     "subRole": "Software Engineer",
-    "tagline": "AI and Full-Stack Developer with hands-on experience building machine learning systems and production-ready web applications.",
+    "tagline": "AI and Full-Stack Developer specializing in machine learning systems, scalable web applications, and real-time data solutions. Experienced in deploying production-ready systems with strong focus on performance, reliability, and user experience.",
     "email": "radhouan.terchella@gmail.com",
     "phone": "437-933-2848",
     "location": "Toronto, ON",
@@ -11,17 +11,25 @@
     "resumeUrl": "/Radhouan_Terchella_Resume.pdf"
   },
   "socials": [
-    { "network": "LinkedIn", "url": "https://linkedin.com/in/", "icon": "linkedin" },
-    { "network": "GitHub", "url": "https://github.com/", "icon": "github" }
+    {
+      "network": "LinkedIn",
+      "url": "https://linkedin.com/in/",
+      "icon": "linkedin"
+    },
+    {
+      "network": "GitHub",
+      "url": "https://github.com/",
+      "icon": "github"
+    }
   ],
   "work": [
     {
       "company": "Kinectrics",
       "role": "AI / Software Developer Intern",
       "detailId": "work-kinectrics",
-      "date": "2025",
-      "location": "Toronto",
-      "description": "Developed anomaly detection models and real-time visualization dashboards."
+      "date": "Jan 2025 - Apr 2025",
+      "location": "Toronto, Canada",
+      "description": "Built anomaly detection models (LSTM, Transformers) on industrial time-series data. Developed real-time Streamlit dashboards for monitoring system behavior. Improved detection accuracy (F1-score ~0.95) through model tuning."
     },
     {
       "company": "Infolib",
@@ -29,15 +37,15 @@
       "detailId": "work-infolib",
       "date": "Jan 2023 - Jun 2023",
       "location": "Sousse, Tunisia",
-      "description": "Supported ERP/CRM operations and collaborated on system workflow improvements."
+      "description": "Supported ERP/CRM systems and resolved technical issues. Improved internal workflows by optimizing data handling processes. Ensured system stability and smooth daily operations."
     },
     {
-      "company": "Nodo Hillcrest",
-      "role": "Server",
+      "company": "ABS Confection",
+      "role": "IT Technician",
       "detailId": "work-nodo",
-      "date": "Feb 2024 - Present",
-      "location": "Toronto",
-      "description": "Delivered high-quality customer service in a fast-paced environment."
+      "date": "Jan 2023 - Jun 2023",
+      "location": "Tunisia",
+      "description": "Maintained internal systems and scheduling applications. Managed inventory tracking tools and improved data consistency. Troubleshot software issues to reduce downtime."
     }
   ],
   "education": [
@@ -56,7 +64,7 @@
       "date": "2024"
     },
     {
-      "school": "Tunisia",
+      "school": "Faculy of Science",
       "detailId": "edu-tunisia",
       "degree": "Bachelor’s Degree in Computer Science",
       "location": "Tunisia",
@@ -68,51 +76,232 @@
     {
       "category": "Languages",
       "items": [
-        { "name": "Python", "level": "expert", "featured": true },
-        { "name": "JavaScript", "level": "expert", "featured": true },
-        { "name": "Kotlin", "level": "advanced", "featured": false },
-        { "name": "Swift", "level": "advanced", "featured": false },
-        { "name": "Java", "level": "advanced", "featured": false },
-        { "name": "C", "level": "intermediate", "featured": false }
+        {
+          "name": "Python",
+          "level": "expert",
+          "featured": true
+        },
+        {
+          "name": "JavaScript",
+          "level": "expert",
+          "featured": true
+        },
+        {
+          "name": "Kotlin",
+          "level": "advanced",
+          "featured": false
+        },
+        {
+          "name": "Swift",
+          "level": "advanced",
+          "featured": false
+        },
+        {
+          "name": "Java",
+          "level": "advanced",
+          "featured": false
+        },
+        {
+          "name": "C",
+          "level": "intermediate",
+          "featured": false
+        }
       ]
     },
     {
-      "category": "AI / ML",
+      "category": "AI / Machine Learning",
       "items": [
-        { "name": "TensorFlow", "level": "expert", "featured": true },
-        { "name": "PyTorch", "level": "expert", "featured": true },
-        { "name": "LSTM", "level": "advanced", "featured": true },
-        { "name": "TranAD", "level": "advanced", "featured": false },
-        { "name": "Anomaly Detection", "level": "expert", "featured": true }
+        {
+          "name": "TensorFlow",
+          "level": "expert",
+          "featured": true
+        },
+        {
+          "name": "PyTorch",
+          "level": "expert",
+          "featured": true
+        },
+        {
+          "name": "LSTM",
+          "level": "advanced",
+          "featured": true
+        },
+        {
+          "name": "Transformers",
+          "level": "advanced",
+          "featured": true
+        },
+        {
+          "name": "Anomaly Detection",
+          "level": "expert",
+          "featured": true
+        },
+        {
+          "name": "NLP",
+          "level": "advanced",
+          "featured": true
+        }
       ]
     },
     {
-      "category": "Web & Databases",
+      "category": "Web & Backend",
       "items": [
-        { "name": "React", "level": "advanced", "featured": true },
-        { "name": "HTML/CSS", "level": "expert", "featured": false },
-        { "name": "REST APIs", "level": "expert", "featured": true },
-        { "name": "Firebase", "level": "expert", "featured": true },
-        { "name": "MongoDB", "level": "advanced", "featured": true },
-        { "name": "MySQL", "level": "advanced", "featured": false }
+        {
+          "name": "React",
+          "level": "advanced",
+          "featured": true
+        },
+        {
+          "name": "HTML/CSS",
+          "level": "expert",
+          "featured": false
+        },
+        {
+          "name": "REST APIs",
+          "level": "expert",
+          "featured": true
+        },
+        {
+          "name": "Firebase",
+          "level": "expert",
+          "featured": true
+        },
+        {
+          "name": "MongoDB",
+          "level": "advanced",
+          "featured": true
+        },
+        {
+          "name": "MySQL",
+          "level": "advanced",
+          "featured": false
+        }
       ]
     },
     {
-      "category": "Tools",
+      "category": "Data & Tools",
       "items": [
-        { "name": "Git", "level": "expert", "featured": true },
-        { "name": "Streamlit", "level": "advanced", "featured": true },
-        { "name": "Android Studio", "level": "advanced", "featured": false },
-        { "name": "SwiftUI", "level": "advanced", "featured": false },
-        { "name": "Figma", "level": "advanced", "featured": false }
+        {
+          "name": "SQL",
+          "level": "advanced",
+          "featured": true
+        },
+        {
+          "name": "Pandas",
+          "level": "expert",
+          "featured": true
+        },
+        {
+          "name": "NumPy",
+          "level": "expert",
+          "featured": false
+        },
+        {
+          "name": "Scikit-learn",
+          "level": "advanced",
+          "featured": true
+        },
+        {
+          "name": "Git",
+          "level": "expert",
+          "featured": true
+        },
+        {
+          "name": "Streamlit",
+          "level": "advanced",
+          "featured": true
+        },
+        {
+          "name": "Android Studio",
+          "level": "advanced",
+          "featured": false
+        },
+        {
+          "name": "SwiftUI",
+          "level": "advanced",
+          "featured": false
+        },
+        {
+          "name": "Figma",
+          "level": "advanced",
+          "featured": false
+        }
       ]
     }
   ],
   "projects": [
     {
+      "title": "Industrial Anomaly Detection Systems (Kinectrics)",
+      "description": "Developed advanced anomaly detection systems for industrial applications, including hydraulic systems and wind turbines. Implemented deep learning and Transformer-based models (TranAD) to detect abnormal patterns in time-series data. Designed real-time monitoring dashboards and optimized detection performance using evaluation metrics and threshold tuning.",
+      "tags": [
+        "Python",
+        "Deep Learning",
+        "Time-Series",
+        "Transformers",
+        "Anomaly Detection"
+      ],
+      "link": "/projects/kinectrics-anomaly-detection",
+      "fallbackIcon": "ai",
+      "category": "AI / ML",
+      "visible": true,
+      "featured": true
+    },
+    {
+      "title": "Creative Portfolio Website (Client Project)",
+      "description": "Designed and developed a production-ready portfolio website for a graphic designer. Focused on modern UI/UX, responsive design, and performance optimization. Delivered a clean and visually engaging platform to showcase creative work, with seamless navigation and fast load times.",
+      "tags": [
+        "React",
+        "Web Design",
+        "UI/UX",
+        "Netlify"
+      ],
+      "link": "/projects/designer-portfolio",
+      "fallbackIcon": "design",
+      "category": "Web",
+      "visible": true,
+      "featured": true
+    },
+    {
+      "title": "Tom’s Barbershop Platform",
+      "description": "Built and deployed a full-scale barbershop management platform used in production. Implemented online booking, staff scheduling, payment processing, and business automation workflows. Integrated SimplyBook.me for real-time appointment management and developed a seamless user experience for both customers and staff.",
+      "tags": [
+        "React",
+        "Netlify",
+        "Booking System",
+        "Payments",
+        "Automation"
+      ],
+      "link": "/projects/barbershop",
+      "fallbackIcon": "react",
+      "category": "Web",
+      "visible": true,
+      "featured": true
+    },
+    {
+      "title": "Barbershop Financial Analytics Dashboard",
+      "description": "Engineered a financial analytics platform that ingests Excel data to generate detailed revenue and performance insights. Built data processing pipelines using Pandas to compute earnings, tips, and staff performance metrics. Implemented interactive filtering and visualization features, enabling real-time business analysis and decision-making.",
+      "tags": [
+        "Python",
+        "Pandas",
+        "Data Engineering",
+        "Analytics",
+        "Dashboard"
+      ],
+      "link": "/projects/barbershop-analytics",
+      "fallbackIcon": "chart",
+      "category": "Data / Analytics",
+      "visible": true,
+      "featured": true
+    },
+    {
       "title": "AskGeorge+ AI",
-      "description": "Built an AI-powered chatbot using NLP and embeddings to answer student-related queries.",
-      "tags": ["Python", "NLP", "Embeddings"],
+      "description": "Engineered an AI-powered chatbot leveraging NLP and vector embeddings to answer student queries with high relevance. Implemented semantic search pipelines using embedding models and retrieval mechanisms, significantly improving response accuracy and contextual understanding.",
+      "tags": [
+        "Python",
+        "NLP",
+        "Embeddings",
+        "LLM"
+      ],
       "link": "/projects/ask-george",
       "fallbackIcon": "python",
       "category": "Coding",
@@ -121,20 +310,14 @@
     },
     {
       "title": "Restaurant Reservation System",
-      "description": "Developed a full-stack booking platform with Firebase for real-time reservations.",
-      "tags": ["Full-Stack", "Firebase", "Web"],
+      "description": "Built a scalable full-stack reservation platform with Firebase real-time database integration. Designed dynamic booking logic and ensured consistent synchronization across users, enabling seamless reservation experiences.",
+      "tags": [
+        "Full-Stack",
+        "Firebase",
+        "Web"
+      ],
       "link": "/projects/restaurant-reservation",
       "fallbackIcon": "code",
-      "category": "Coding",
-      "visible": true,
-      "featured": true
-    },
-    {
-      "title": "Barbershop Website",
-      "description": "Designed and deployed a production website using React and Netlify. Integrated SimplyBook.me scheduling.",
-      "tags": ["React", "Netlify", "Web"],
-      "link": "/projects/barbershop",
-      "fallbackIcon": "react",
       "category": "Coding",
       "visible": true,
       "featured": true

@@ -56,7 +56,7 @@ const pageDescription = "A collection of my recent projects and case studies";
             stack: p.data.stack,
             repoUrl: p.data.repoUrl,
             liveUrl: p.data.liveUrl,
-            heroImage: p.data.heroImage,
+            heroImage: p.data.image || p.data.heroImage,
             category: p.data.category,
           }))}
         />

@@ -29,6 +29,8 @@ const projects = defineCollection({
         description: z.string(),
         stack: z.array(z.string()), // e.g. ["Python", "React"]
         heroImage: z.string().optional(),
+        image: z.string().optional(),
+        fallbackIcon: z.string().optional(),
         repoUrl: z.string().optional(),
         liveUrl: z.string().optional(),
         role: z.string().optional(),
@@ -36,6 +38,7 @@ const projects = defineCollection({
         visible: z.boolean().default(true),
         featured: z.boolean().default(false),
         category: z.string().optional(), // "Coding" or "IT"
+        order: z.number().optional(),
     })
 });
 

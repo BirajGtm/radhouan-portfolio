@@ -22,9 +22,10 @@ import { getAllPosts } from '../lib/blog';
 // Fetch Blog Posts (Sort by newest, combined local and Dev.to)
 const posts = (await getAllPosts()).slice(0, 3);
 
-// Fetch Projects (Filter by visibility & featured, limit to 3)
+// Fetch Projects (Filter by visibility & featured, sort by order, limit to 3)
 const projects = (await getCollection('projects'))
 	.filter(p => p.data.visible !== false && p.data.featured === true)
+	.sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
 	.slice(0, 3);
 
 // Attach HTML content to work/education items
@@ -291,9 +292,9 @@ const featuredSkills = data.skills
 								title={project.data.title}
 								description={project.data.description}
 								tags={project.data.stack}
-								link={`/projects/${project.id.replace(/\.md$/, '')}`}
-								image={project.data.heroImage}
-								fallbackIcon={project.data.category === 'IT' ? 'shield' : (project.data.stack?.[0]?.toLowerCase() === 'python' ? 'python' : 'code')}
+								link={`/projects/${project.slug || project.id.replace(/\.md$/, '')}`}
+								image={project.data.image || project.data.heroImage}
+								fallbackIcon={project.data.fallbackIcon || (project.data.category === 'IT' ? 'shield' : (project.data.stack?.[0]?.toLowerCase() === 'python' ? 'python' : 'code'))}
 								category={project.data.category}
 							/>
 						))}
